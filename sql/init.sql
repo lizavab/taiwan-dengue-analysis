@@ -1,0 +1,73 @@
+CREATE TABLE "dengue_cases"(
+	"id" INTEGER NOT NULL,
+	"date_onset" DATE,
+	"date_confirmation" DATE,
+	"date_notification" DATE,
+	"sex" TEXT,
+	"age_group" TEXT,
+	"imported" TEXT,
+	"country_infected" TEXT,
+	"confirmed_cases" INTEGER,
+	"serotype" TEXT,
+	"township_living" INTEGER,
+	"township_infected" INTEGER
+);
+ALTER TABLE
+	"dengue_cases" ADD PRIMARY KEY("id");
+CREATE TABLE "weather_reports"(
+	"id" INTEGER NOT NULL,
+	"station" TEXT NOT NULL,
+	"obs_date" DATE NOT NULL,
+	"temp" INTEGER,
+	"temp_max" INTEGER,
+	"temp_min" INTEGER,
+	"temp_dp" INTEGER,
+	"rel_humidity" INTEGER,
+	"wind_speed" INTEGER,
+	"wind_dir" INTEGER,
+	"precp" INTEGER
+);
+ALTER TABLE
+	"weather_reports" ADD PRIMARY KEY("id");
+CREATE TABLE "counties"(
+	"code" INTEGER NOT NULL,
+	"name" TEXT NOT NULL,
+	"total_pop" INTEGER,
+	"geom" GEOMETRY NOT NULL
+);
+ALTER TABLE
+	"counties" ADD PRIMARY KEY("code");
+CREATE TABLE "townships"(
+	"code" INTEGER NOT NULL,
+	"county" INTEGER NOT NULL,
+	"id" TEXT NOT NULL,
+	"name" TEXT NOT NULL,
+	"total_pop" INTEGER,
+	"geom" GEOMETRY NOT NULL
+);
+ALTER TABLE
+	"townships" ADD PRIMARY KEY("code");
+CREATE TABLE "stations"(
+	"code" TEXT NOT NULL,
+	"township" INTEGER,
+	"name" TEXT,
+	"type" TEXT,
+	"longitude" INTEGER,
+	"latitude" INTEGER,
+	"altitude" INTEGER,
+	"data_start_date" DATE,
+	"data_end_date" DATE,
+	"geom" GEOMETRY NOT NULL
+);
+ALTER TABLE
+	"stations" ADD PRIMARY KEY("code");
+ALTER TABLE
+	"townships" ADD CONSTRAINT "townships_county_foreign" FOREIGN KEY("county") REFERENCES "counties"("code");
+ALTER TABLE
+	"dengue_cases" ADD CONSTRAINT "dengue_cases_township_infected_foreign" FOREIGN KEY("township_infected") REFERENCES "townships"("code");
+ALTER TABLE
+	"weather_reports" ADD CONSTRAINT "weather_reports_station_foreign" FOREIGN KEY("station") REFERENCES "stations"("code");
+ALTER TABLE
+	"dengue_cases" ADD CONSTRAINT "dengue_cases_township_living_foreign" FOREIGN KEY("township_living") REFERENCES "townships"("code");
+ALTER TABLE
+	"stations" ADD CONSTRAINT "stations_township_foreign" FOREIGN KEY("township") REFERENCES "townships"("code");
