@@ -1,3 +1,11 @@
+DROP TABLE IF EXISTS 
+    weather_reports,
+    stations,
+    counties,
+    dengue_cases,
+    townships
+CASCADE;
+
 CREATE TABLE "dengue_cases"(
 	"id" INTEGER NOT NULL,
 	"date_onset" DATE,
@@ -18,30 +26,32 @@ CREATE TABLE "weather_reports"(
 	"id" INTEGER NOT NULL,
 	"station" TEXT NOT NULL,
 	"obs_date" DATE NOT NULL,
-	"temp" INTEGER,
-	"temp_max" INTEGER,
-	"temp_min" INTEGER,
-	"temp_dp" INTEGER,
+	"temp" FLOAT,
+	"temp_max" FLOAT,
+	"temp_min" FLOAT,
+	"temp_dp" FLOAT,
 	"rel_humidity" INTEGER,
-	"wind_speed" INTEGER,
-	"wind_dir" INTEGER,
-	"precp" INTEGER
+	"wind_speed" FLOAT,
+	"wind_dir" FLOAT,
+	"precp" FLOAT
 );
 ALTER TABLE
 	"weather_reports" ADD PRIMARY KEY("id");
-CREATE TABLE "counties"(
+/*CREATE TABLE "counties"(
 	"code" INTEGER NOT NULL,
-	"name" TEXT NOT NULL,
+	"name" TEXT,
+	"orig_name" TEXT,
 	"total_pop" INTEGER,
 	"geom" GEOMETRY NOT NULL
 );
 ALTER TABLE
-	"counties" ADD PRIMARY KEY("code");
+	"counties" ADD PRIMARY KEY("code");*/
 CREATE TABLE "townships"(
 	"code" INTEGER NOT NULL,
 	"county" INTEGER NOT NULL,
 	"id" TEXT NOT NULL,
-	"name" TEXT NOT NULL,
+	"name" TEXT,
+	"orig_name" TEXT,
 	"total_pop" INTEGER,
 	"geom" GEOMETRY NOT NULL
 );
@@ -51,18 +61,20 @@ CREATE TABLE "stations"(
 	"code" TEXT NOT NULL,
 	"township" INTEGER,
 	"name" TEXT,
+	orig_name TEXT,
 	"type" TEXT,
-	"longitude" INTEGER,
-	"latitude" INTEGER,
-	"altitude" INTEGER,
+	"longitude" FLOAT,
+	"latitude" FLOAT,
+	"altitude" FLOAT,
 	"data_start_date" DATE,
 	"data_end_date" DATE,
-	"geom" GEOMETRY NOT NULL
+	"geom" GEOMETRY
 );
 ALTER TABLE
 	"stations" ADD PRIMARY KEY("code");
-ALTER TABLE
-	"townships" ADD CONSTRAINT "townships_county_foreign" FOREIGN KEY("county") REFERENCES "counties"("code");
+
+/*ALTER TABLE
+	"townships" ADD CONSTRAINT "townships_county_foreign" FOREIGN KEY("county") REFERENCES "counties"("code");*/
 ALTER TABLE
 	"dengue_cases" ADD CONSTRAINT "dengue_cases_township_infected_foreign" FOREIGN KEY("township_infected") REFERENCES "townships"("code");
 ALTER TABLE
