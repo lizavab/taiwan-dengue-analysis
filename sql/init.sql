@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS
 CASCADE;
 
 CREATE TABLE dengue_cases(
-	id INTEGER NOT NULL,
+	id SERIAL PRIMARY KEY,
 	date_onset DATE,
 	date_confirmation DATE,
 	date_notification DATE,
@@ -20,9 +20,6 @@ CREATE TABLE dengue_cases(
 	township_living INTEGER,
 	township_infected INTEGER
 );
-
-ALTER TABLE
-	dengue_cases ADD PRIMARY KEY(id);
 	
 CREATE TABLE weather_reports(
 	id SERIAL PRIMARY KEY,
@@ -46,9 +43,7 @@ CREATE TABLE counties(
 	total_pop INTEGER,
 	geom GEOMETRY NOT NULL
 );
-
-ALTER TABLE
-	counties ADD PRIMARY KEY(code);
+ALTER TABLE counties ADD PRIMARY KEY(code);
 	
 CREATE TABLE townships(
 	code INTEGER NOT NULL,
@@ -59,9 +54,7 @@ CREATE TABLE townships(
 	total_pop INTEGER,
 	geom GEOMETRY NOT NULL
 );
-
-ALTER TABLE
-	townships ADD PRIMARY KEY(code);
+ALTER TABLE townships ADD PRIMARY KEY(code);
 	
 CREATE TABLE stations(
 	code TEXT NOT NULL,
@@ -76,8 +69,7 @@ CREATE TABLE stations(
 	data_end_date DATE,
 	geom GEOMETRY
 );
-ALTER TABLE
-	stations ADD PRIMARY KEY(code);
+ALTER TABLE stations ADD PRIMARY KEY(code);
 
 ALTER TABLE townships ADD CONSTRAINT townships_county_foreign FOREIGN KEY(county) REFERENCES counties(code);
 
