@@ -16,3 +16,7 @@ FROM temporary_table;
 
 -- Delete the temporary table.
 DROP TABLE IF EXISTS temporary_table;
+
+-- Transform CRS to EPSG:3826 (TWD97).
+UPDATE counties
+SET geom = ST_Transform(geom, 3826);
