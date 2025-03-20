@@ -18,3 +18,12 @@ ORDER BY station_count DESC;
 -- Find which townships have 0 stations.
 SELECT townships.code FROM townships
 WHERE townships.code NOT IN (SELECT stations.township FROM stations);
+
+-- Filter out all stations located on small islands.
+CREATE VIEW main_island_stations AS
+SELECT * FROM stations
+WHERE code NOT IN (
+    '467990', '467620', '467350', '467300', 'C0W160', 'C0S730', 'C0W110', 
+    'C0W150', 'C0S900', 'C0S910', 'C0W200', 'C0R270', 'C0W120', 'C2W230', 
+    'C0W130', 'C0W190', 'C0W180', '466950', 'C0W170', 'C0W240', 'C0W220', 
+    '467110', 'C0W140');
