@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS 
-    weather_reports,
+    weather_daily,
+	weather_monthly,
     stations,
     counties,
     dengue_cases,
@@ -21,18 +22,30 @@ CREATE TABLE dengue_cases(
 	township_infected INTEGER
 );
 	
-CREATE TABLE weather_reports(
+CREATE TABLE weather_daily(
 	id SERIAL PRIMARY KEY,
 	station TEXT NOT NULL,
 	obs_date DATE NOT NULL,
-	temp FLOAT,
-	temp_max FLOAT,
-	temp_min FLOAT,
-	temp_dp FLOAT,
+	tavg FLOAT,
+	tmax FLOAT,
+	tmin FLOAT,
+	tdp FLOAT,
 	rel_humidity FLOAT,
 	wind_speed FLOAT,
-	wind_dir FLOAT,
-	precp FLOAT
+	precip FLOAT
+);
+
+CREATE TABLE weather_monthly(
+	id SERIAL PRIMARY KEY,
+	station TEXT NOT NULL,
+	obs_date DATE NOT NULL,
+	tavg FLOAT,
+	tmax FLOAT,
+	tmin FLOAT,
+	tdp FLOAT,
+	rel_humidity FLOAT,
+	wind_speed FLOAT,
+	precip FLOAT
 );
 
 CREATE TABLE counties(
@@ -73,7 +86,9 @@ ALTER TABLE stations ADD PRIMARY KEY(code);
 
 ALTER TABLE townships ADD CONSTRAINT townships_county_foreign FOREIGN KEY(county) REFERENCES counties(code);
 
-ALTER TABLE weather_reports ADD CONSTRAINT weather_reports_station_foreign FOREIGN KEY(station) REFERENCES stations(code);
+ALTER TABLE weather_daily ADD CONSTRAINT weather_daily_station_foreign FOREIGN KEY(station) REFERENCES stations(code);
+
+ALTER TABLE weather_monthly ADD CONSTRAINT weather_monthly_station_foreign FOREIGN KEY(station) REFERENCES stations(code);
 
 ALTER TABLE dengue_cases ADD CONSTRAINT dengue_cases_township_infected_foreign FOREIGN KEY(township_infected) REFERENCES townships(code);
 
