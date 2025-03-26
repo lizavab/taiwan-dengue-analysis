@@ -54,6 +54,7 @@ CREATE TABLE counties(
 	name TEXT,
 	orig_name TEXT,
 	total_pop INTEGER,
+	pop_density FLOAT,
 	geom GEOMETRY NOT NULL
 );
 ALTER TABLE counties ADD PRIMARY KEY(code);
@@ -65,6 +66,7 @@ CREATE TABLE townships(
 	name TEXT,
 	orig_name TEXT,
 	total_pop INTEGER,
+	pop_density FLOAT,
 	geom GEOMETRY NOT NULL
 );
 ALTER TABLE townships ADD PRIMARY KEY(code);
