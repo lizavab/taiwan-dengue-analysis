@@ -21,3 +21,12 @@ DROP TABLE IF EXISTS temporary_table;
 -- Transform CRS to EPSG:3826 (TWD97).
 UPDATE townships
 SET geom = ST_Transform(geom, 3826);
+
+-- Create view with townships on main island.
+CREATE VIEW main_island_townships AS
+SELECT * FROM townships
+WHERE code NOT IN (
+    '9020060', '10014110', '10014160', '9007020', '9007040', 
+    '9007010', '9007030', '10016060', '10016030', '10016040', 
+    '10016010', '10016050', '10016020', '9020010', '9020020', 
+    '9020030', '9020040', '9020050', '10013220');
