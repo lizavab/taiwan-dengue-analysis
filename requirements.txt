@@ -3,3 +3,7 @@ numpy
 matplotlib
 seaborn
 psycopg2
+sqlalchemy
+rasterio
+geopandas
+rasterstats
