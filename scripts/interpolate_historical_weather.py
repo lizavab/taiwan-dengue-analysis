@@ -17,7 +17,7 @@ start_time = time.time()
 arcpy.env.overwriteOutput = True
 
 # Set environment settings
-env.workspace = "C:/Users/..."
+env.workspace = ".."
 
 # Create a SQLAlchemy engine
 conn_string = "postgresql://postgres:password@localhost:5433/tw" # database connection string
@@ -30,10 +30,7 @@ raster_path = "nn_raster.tif"
 # Create an empty dataframe to store all interpolated data for 2011-2024
 interpolated_data = pd.DataFrame(columns=['county', 'code', 'name', 'year', 'month', 'tavg', 'tmax', 'tmin', 'wind_speed', 'precip'])
 
-#years = list(range(2011, 2025))
-#months = list(range(1, 13))
-
-years = list(range(2012, 2013)) # test with one year (2012)
+years = list(range(2011, 2025))
 months = list(range(1, 13))
 
 for year in years:
@@ -50,10 +47,10 @@ for year in years:
             params=(year, month),
             geom_col="geom"
         )
+
         print(obs.head(5))
 
         obs.to_file(shp_path, driver='ESRI Shapefile')
-        print(shp_path)
 
         # Insert township geom into geodataframe
         townships = gpd.read_postgis(
