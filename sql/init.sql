@@ -67,6 +67,9 @@ CREATE TABLE townships(
 	orig_name TEXT,
 	total_pop INTEGER,
 	pop_density FLOAT,
+	elevation FLOAT,
+	main_climate TEXT,
+	built_up_area FLOAT,
 	geom GEOMETRY NOT NULL
 );
 ALTER TABLE townships ADD PRIMARY KEY(code);
