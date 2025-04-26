@@ -2,7 +2,6 @@ import pandas as pd
 import geopandas as gpd
 import sqlalchemy
 from sqlalchemy import create_engine
-from sqlalchemy import text
 import rasterstats
 from rasterstats import zonal_stats
 import arcpy
