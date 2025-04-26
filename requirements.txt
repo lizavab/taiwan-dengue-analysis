@@ -8,3 +8,4 @@ rasterio
 geopandas
 rasterstats
 pysal
+statsmodels
