@@ -9,3 +9,4 @@ geopandas
 rasterstats
 pysal
 statsmodels
+scipy
