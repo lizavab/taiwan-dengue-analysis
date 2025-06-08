@@ -34,6 +34,30 @@ WHERE
     wind_speed IS NOT NULL AND 
     precip IS NOT NULL;
 
+-- Create subset with geometries for interpolation method testing.
+CREATE VIEW subset_2012_8 AS
+SELECT 
+	s.code AS station,
+    s.township AS township,
+    EXTRACT(YEAR FROM wm.obs_date) AS year,
+    EXTRACT(MONTH FROM wm.obs_date) AS month,
+	wm.tavg AS tavg,
+    wm.tmax AS tmax,
+    wm.tmin AS tmin,
+    wm.wind_speed AS wind_speed,
+    wm.precip AS precip,
+	s.geom AS geom
+FROM main_island_stations s
+JOIN 
+    weather_monthly_clean wm ON s.code = wm.station
+WHERE 
+	EXTRACT(YEAR FROM wm.obs_date) = 2012 AND 
+	EXTRACT(MONTH FROM wm.obs_date) = 8
+ORDER BY 
+    s.code, year, month;
+
+SELECT * FROM subset_2012_8;
+
 -- Create a view for 2011-2024 period with specific variables and from main island stations only.	
 CREATE VIEW weather_2011_2024 AS
 SELECT 
