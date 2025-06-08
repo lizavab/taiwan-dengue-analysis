@@ -7,8 +7,10 @@ library(RColorBrewer)
 # Prepare data 
 map <- read_sf("taiwan.shp")
 map <- map %>% mutate(TOWNCODE = as.integer(TOWNCODE)) 
+boundary <- read_sf("boundary.shp")
 data <- fread("data_2011_2024.csv", header = T)
 data <- data[data$year > 2011,] # Remove year 2011 (only needed for lag calculation)
+
 
 # Dengue case count (DCC) heatmap
 cases_heatmap <- 
@@ -84,6 +86,7 @@ incidence_annual <-
   left_join(map, ., by = c("TOWNCODE" = "code")) %>% 
   ggplot() + 
   geom_sf(aes(fill = var), lwd = 0, color = NA) +
+  geom_sf(data = boundary, fill = NA, color = "black", size = 0.5) + 
   scale_fill_gradientn(name = "DI (log)", colours = brewer.pal(9, "Reds"), 
                        trans = "log1p", breaks = c(0, 10, 100, 1000), 
                        labels = c(0, 10, 100, 1000) ) + 
